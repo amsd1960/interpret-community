@@ -104,3 +104,13 @@ class TestExplanationDashboard:
                                     features=feature_names, classes=target_names)
         explanation = explainer.explain_global(x_test)
         show(explanation)
+
+    def test_visualize_explanation(self, mimic_explainer):
+        # Validate we can call the visualize method on the explanation
+        x_train, x_test, y_train, y_test, feature_names, target_names = create_cancer_data()
+        # Fit an SVM model
+        model = create_sklearn_svm_classifier(x_train, y_train)
+        explainer = mimic_explainer(model, x_train, LGBMExplainableModel,
+                                    features=feature_names, classes=target_names)
+        explanation = explainer.explain_global(x_test)
+        explanation.visualize()
